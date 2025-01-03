@@ -125,13 +125,7 @@ void compute_graph(
         struct ggml_context * ctx0,
         const int n_threads,
         const char * fname_cgraph) {
-
-    // Execute the computation graph
     ggml_graph_compute_with_ctx(ctx0, gf, n_threads);
-
-    // if (fname_cgraph) {
-    //     fprintf(stderr, "%s: graph export not supported in this version\n", __func__);
-    // }
 }
 
 int main(int argc, char ** argv) {
