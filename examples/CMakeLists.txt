@@ -56,6 +56,7 @@ else()
 
     # ============= added by alex for code understanding start =========== #
     add_subdirectory(alex-mlp)
+    add_subdirectory(alex-simple-lm)
     # ============= added by alex for code understanding end   =========== #
 
     if (NOT GGML_BACKEND_DL)
