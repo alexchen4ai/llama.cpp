@@ -75,11 +75,9 @@ int main(int argc, char ** argv) {
     }
 
     // load dynamic backends
-
     ggml_backend_load_all();
 
     // initialize the model
-
     llama_model_params model_params = llama_model_default_params();
     model_params.n_gpu_layers = ngl;
 
@@ -89,8 +87,6 @@ int main(int argc, char ** argv) {
         fprintf(stderr , "%s: error: unable to load model\n" , __func__);
         return 1;
     }
-
-    // tokenize the prompt
 
     // find the number of tokens in the prompt
     const int n_prompt = -llama_tokenize(model, prompt.c_str(), prompt.size(), NULL, 0, true, true);
