@@ -91,7 +91,8 @@ int main(int argc, char ** argv) {
         return 1;
     }
 
-    // find the number of tokens in the prompt
+    /* find the number of tokens in the prompt.
+     * The function llama_tokenize returns the number of tokens in the prompt after we pass n_max token as 0*/
     const int n_prompt = -llama_tokenize(model, prompt.c_str(), prompt.size(), NULL, 0, true, true);
 
     // allocate space for the tokens and tokenize the prompt
