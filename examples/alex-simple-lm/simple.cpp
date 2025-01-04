@@ -103,6 +103,8 @@ int main(int argc, char ** argv) {
     }
 
     // initialize the context
+    /* while the final output tokens are generated one by one (because each new token depends on all previous ones), 
+       the underlying computations for attention mechanisms can be batched for efficiency.*/
     llama_context_params ctx_params = llama_context_default_params();
     ctx_params.n_ctx = n_prompt + n_predict - 1;
     ctx_params.n_batch = n_prompt;
@@ -116,14 +118,14 @@ int main(int argc, char ** argv) {
     }
 
     // initialize the sampler
+    // Sampler is used to create the next token
     auto sparams = llama_sampler_chain_default_params();
     sparams.no_perf = false;
     llama_sampler * smpl = llama_sampler_chain_init(sparams);
-
     llama_sampler_chain_add(smpl, llama_sampler_init_greedy());
 
-    // print the prompt token-by-token
 
+    // print the prompt token-by-token
     for (auto id : prompt_tokens) {
         char buf[128];
         int n = llama_token_to_piece(model, id, buf, sizeof(buf), 0, true);
@@ -136,11 +138,9 @@ int main(int argc, char ** argv) {
     }
 
     // prepare a batch for the prompt
-
     llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
 
     // main loop
-
     const auto t_main_start = ggml_time_us();
     int n_decode = 0;
     llama_token new_token_id;
