@@ -137,7 +137,10 @@ int main(int argc, char ** argv) {
         printf("%s", s.c_str());
     }
 
-    // prepare a batch for the prompt
+    /* prepare a batch for the prompt
+     * the batch contains multiple data such as token, embd, pos, n_seq_id, seq_id, logits
+     * they are basically the input data for the model.
+     */
     llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
 
     // main loop
