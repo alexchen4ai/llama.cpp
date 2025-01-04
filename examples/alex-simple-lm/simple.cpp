@@ -79,7 +79,8 @@ int main(int argc, char ** argv) {
     // load dynamic backends, like cpu/gpu/vulkan
     ggml_backend_load_all();
 
-    /* in C++, we need to check the type of all defined variables carefully */
+    /* in C++, we need to check the type of all defined variables carefully 
+     * like here. We wish to check llama_model_params */
     llama_model_params model_params = llama_model_default_params();
     model_params.n_gpu_layers = ngl;
 
