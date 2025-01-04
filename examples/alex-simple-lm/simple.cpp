@@ -10,17 +10,18 @@ static void print_usage(int, char ** argv) {
     printf("\n");
 }
 
+
+/* argc is the count of arguments and argv is the real value. argv[0] 
+   is the first program value. In this case, like `./build/bin/alex_simple`*/
 int main(int argc, char ** argv) {
-    // path to the model gguf file
     std::string model_path;
-    // prompt to generate text from
     std::string prompt = "Hello my name is";
+
     // number of layers to offload to the GPU
     int ngl = 99;
+
     // number of tokens to predict
     int n_predict = 32;
-
-    // parse command line arguments
 
     {
         int i = 1;
@@ -35,6 +36,7 @@ int main(int argc, char ** argv) {
             } else if (strcmp(argv[i], "-n") == 0) {
                 if (i + 1 < argc) {
                     try {
+                        /* convert string to integer, and it could fail so we use try except*/
                         n_predict = std::stoi(argv[++i]);
                     } catch (...) {
                         print_usage(argc, argv);
@@ -74,10 +76,10 @@ int main(int argc, char ** argv) {
         }
     }
 
-    // load dynamic backends
+    // load dynamic backends, like cpu/gpu/vulkan
     ggml_backend_load_all();
 
-    // initialize the model
+    /* in C++, we need to check the type of all defined variables carefully */
     llama_model_params model_params = llama_model_default_params();
     model_params.n_gpu_layers = ngl;
 
